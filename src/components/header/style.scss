@@ -1,0 +1,76 @@
+@import "../../mixins.scss";
+
+.header {
+    position: fixed;
+    right: 0;
+    left: 0;
+    transform: translateY(0);
+    width: 100%;
+    height: 60px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    transition: all ease 0.5s;
+    &.top {
+        background: rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(3.5px);
+        -webkit-backdrop-filter: blur(3.5px);
+    }
+    &.show {
+        background-color: var(--black3);
+    }
+    &.hide {
+        transform: translateY(-60px);
+    }
+    .contentWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .logo {
+            cursor: pointer;
+            img {
+                height: 50px;
+            }
+        }
+        .menuItems {
+            list-style-type: none;
+            display: none;
+            align-items: center;
+            @include md {
+                display: flex;
+            }
+            .item {
+                height: 60px;
+                display: flex;
+                align-items: center;
+                margin: 0 15px;
+                color: white;
+                font-weight: 500;
+                position: relative;
+                &.searchCircle {
+                    margin-right: 0;
+                }
+                svg {
+                    font-size: 20px;
+                }
+                cursor: pointer;
+                &:hover {
+                    color: var(--orange);
+                }
+            }
+        }
+        .mobileMenuItems {
+            display: flex;
+            align-items: center;
+            padding-right: 20px;
+            gap: 20px;
+            color: white;
+            @include md {
+                display: none;
+            }
+            svg {
+                font-size: 20px;
+            }
+        }
+    }
+}
