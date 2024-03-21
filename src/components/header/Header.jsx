@@ -14,6 +14,28 @@ const Header = () => {
     const [showSearch, setShowSearch] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
+    useEffect(() => {
+        window.addEventListener("scroll", controlNavBar);
+        return () => {
+            window.removeEventListener("scroll", controlNavBar);
+        };
+    }, [lastScrollY]);
+    const controlNavBar = () => {
+        if (window.scrollY > 200) {
+            if ((window.scrollY > lastScrollY) & !mobileMenu) {
+                setShow("hide");
+            } else {
+                setShow("show");
+            }
+            setLastScrollY(window.scrollY);
+        } else {
+            setShow("top");
+        }
+    };
+
     const openSearch = () => {
         setMobileMenu(false);
         setShowSearch(!showSearch);
@@ -30,6 +52,14 @@ const Header = () => {
             }, 1000);
         }
     };
+    const handleNavigate = (type) => {
+        if (type === "movies") {
+            navigate("/explore/movie");
+        } else {
+            navigate("explore/tv");
+        }
+        setMobileMenu(false);
+    };
     return (
         <header className={`header ${show} ${mobileMenu ? "mobileView" : ""}`}>
             <ContentWrapper>
@@ -37,8 +67,15 @@ const Header = () => {
                     <img src={logo} alt="Logo Details" />
                 </div>
                 <ul className="menuItems">
-                    <li className="item">Movies</li>
-                    <li className="item">TV Shows</li>
+                    <li
+                        className="item"
+                        onClick={() => handleNavigate("movies")}
+                    >
+                        Movies
+                    </li>
+                    <li className="item" onClick={() => handleNavigate("tv")}>
+                        TV Shows
+                    </li>
                     <li className="item">
                         <HiOutlineSearch onClick={openSearch} />
                     </li>
